@@ -17,11 +17,11 @@ namespace Local{
         cv::Size size = _matrix.size();
         uchar pixelSize = _matrix.elemSize();
         uchar * buffer = new uchar[pixelSize];
-        uchar *a_buffer, *b_buffer;
+        uchar *a_buffer, *b_buffer, *row;
 
         for (size_t i = 0; i < size.height; i++)
         {
-            uchar* row = _matrix.ptr(i);
+            row = _matrix.ptr(i);
             for (size_t j = 0; j < size.width/2; j++)
             {
                 int b_column = size.width - 1 - j;
@@ -41,13 +41,13 @@ namespace Local{
         cv::Size size = _matrix.size();
         uchar* buffer = new uchar[3*size.width];
         uchar pixelSize = _matrix.elemSize();
-        uchar* b_buffer;
+        uchar* b_buffer, *row;
         int row_blength = pixelSize * size.width;
 
         for (size_t i = 0; i < size.height / 2; i++)
         {
+            row = _matrix.ptr(i);
             std::cout << "row index: " << i << std::endl;
-            uchar* row = _matrix.ptr(i);
             int a_row = i;
             int b_row = size.height - 1 - i;
             if (a_row != b_row){
@@ -58,6 +58,28 @@ namespace Local{
             }
         }
         return *this;
+    }
+
+    Image& Image::toGrayScale(){
+        cv::Size size = _matrix.size();
+        uchar *row, pixelSize = _matrix.elemSize();
+        float L;
+        int offset;
+
+        for (size_t i = 0; i < size.height; i++)
+        {
+            row = _matrix.ptr(i);
+            for (size_t j = 0; j < size.width; j++)
+            {
+                offset = j*pixelSize;
+                L = 0.299*row[offset+2] + 0.587*row[offset+1] + 0.114*row[offset];
+
+                row[offset] = (uchar) L;
+                row[offset + 1] = (uchar) L;
+                row[offset + 2] = (uchar) L;
+            }
+        }
+        return *this;        
     }
 
     bool Image::saveToDisk(){

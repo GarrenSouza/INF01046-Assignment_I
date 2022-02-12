@@ -29,18 +29,13 @@ int main(int argc, char** argv )
 
     cv::namedWindow("Base Image", WINDOW_AUTOSIZE );
     cv::namedWindow("Transformed Image", WINDOW_AUTOSIZE );
-    Local::Image transformed_image = Image(std::string(argv[1]));
-    for (size_t i = 0; i < 100; i++)
-    {
-        if(i%2)
-            transformed_image.mirrorH();
-        else
-            transformed_image.mirrorV();
-        cv::imshow("Transformed Image", transformed_image._matrix);
-        waitKey(0);
-    }
 
-    
+    Local::Image transformed_image = Image(std::string(argv[1]));
+
+    transformed_image.toGrayScale();
     cv::imshow("Base Image", base_image);
+    cv::imshow("Transformed Image", transformed_image._matrix);
+
+    waitKey(0);
     return 0;
 }
