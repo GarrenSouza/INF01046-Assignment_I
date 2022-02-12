@@ -37,5 +37,6 @@ int main(int argc, char** argv )
     cv::imshow("Transformed Image", processing_image.underlyingContainer());
 
     waitKey(0);
+    processing_image.saveToDisk(std::string(argv[3]));
     return 0;
 }
