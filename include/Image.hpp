@@ -1,15 +1,20 @@
 #pragma once
 
+#include <sstream>
+#include <math.h>
+
 #include <opencv2/opencv.hpp>
-#include <iostream>
+
 
 namespace Local{
 
     class Image{
 
+        private:
+            std::string _file_path; 
+            cv::Mat _matrix;
 
         public:
-            cv::Mat _matrix;
 
             Image(std::string filePath);
 
@@ -31,8 +36,12 @@ namespace Local{
             Image& toGrayScale();
 
             //! Quantizes the grayscale version into the given amount of tones
-            Image& quantize(int tones);
+            Image& quantize(int noTones);
 
-            bool saveToDisk();
+            const cv::Mat& underlyingContainer();
+
+            bool saveToDisk(std::string filePath);
+
+            std::string info();
     };
 }
