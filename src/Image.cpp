@@ -13,6 +13,30 @@ namespace Local{
         return *this;
     }
 
+    Image& Image::mirrorH(){
+        cv::Size size = _matrix.size();
+        uchar pixelSize = _matrix.elemSize();
+        uchar * buffer = new uchar[pixelSize];
+        uchar *a_buffer, *b_buffer;
+
+        for (size_t i = 0; i < size.height; i++)
+        {
+            uchar* row = _matrix.ptr(i);
+            for (size_t j = 0; j < size.width/2; j++)
+            {
+                int b_column = size.width - 1 - j;
+                if (j != b_column){
+                    a_buffer = row + j * pixelSize;
+                    b_buffer = row + b_column * pixelSize;
+                    memcpy(buffer, a_buffer, pixelSize * sizeof(uchar)); // buffer <- current_row
+                    memcpy(a_buffer, b_buffer, pixelSize * sizeof(uchar)); // current row <- opposite row
+                    memcpy(b_buffer, buffer, pixelSize * sizeof(uchar)); // opposite row <- (buffer = previous current row)
+                }
+            }
+        }
+        return *this;
+    }
+
     Image& Image::mirrorV(){
         cv::Size size = _matrix.size();
         uchar* buffer = new uchar[3*size.width];
@@ -28,9 +52,9 @@ namespace Local{
             int b_row = size.height - 1 - i;
             if (a_row != b_row){
                 b_buffer = _matrix.ptr(b_row);
-                memcpy(buffer, row, row_blength); // buffer <- current_row
-                memcpy(row, b_buffer, row_blength); // current row <- opposite row
-                memcpy(b_buffer, buffer, row_blength); // opposite row <- (buffer = previous current row)
+                memcpy(buffer, row, row_blength*sizeof(uchar)); // buffer <- current_row
+                memcpy(row, b_buffer, row_blength*sizeof(uchar)); // current row <- opposite row
+                memcpy(b_buffer, buffer, row_blength*sizeof(uchar)); // opposite row <- (buffer = previous current row)
             }
         }
         return *this;
