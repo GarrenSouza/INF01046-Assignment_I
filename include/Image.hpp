@@ -1,47 +1,45 @@
 #pragma once
 
-#include <sstream>
 #include <math.h>
+#include <sstream>
 
 #include <opencv2/opencv.hpp>
 
+namespace Local {
 
-namespace Local{
+class Image {
 
-    class Image{
+private:
+    std::string _file_path;
+    cv::Mat _matrix;
 
-        private:
-            std::string _file_path; 
-            cv::Mat _matrix;
+public:
+    Image(std::string filePath);
 
-        public:
+    //! The copy constructor
+    Image(const Image &other);
 
-            Image(std::string filePath);
+    //! The copy-assignment operator
+    Image &operator=(const Image &other);
 
-            //! The copy constructor
-            Image(const Image& other);
+    // ~Image();
 
-            //! The copy-assignment operator
-            Image& operator=(const Image& other);
+    //! Mirrors the image horizontally
+    Image &mirrorH();
 
-            // ~Image();
+    //! Mirrors the image vertically
+    Image &mirrorV();
 
-            //! Mirrors the image horizontally
-            Image& mirrorH();
+    //! Converts the image to grayscale
+    Image &toGrayScale();
 
-            //! Mirrors the image vertically
-            Image& mirrorV();
+    //! Quantizes the grayscale version into the given amount of tones
+    Image &quantize(int noTones);
 
-            //! Converts the image to grayscale
-            Image& toGrayScale();
+    const cv::Mat &underlyingContainer();
 
-            //! Quantizes the grayscale version into the given amount of tones
-            Image& quantize(int noTones);
+    bool saveToDisk(std::string filePath);
 
-            const cv::Mat& underlyingContainer();
-
-            bool saveToDisk(std::string filePath);
-
-            std::string info();
-    };
-}
+    std::string info();
+};
+} // namespace Local
