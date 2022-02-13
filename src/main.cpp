@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
 
     Local::Image processing_image = Image(std::string(argv[1]));
     std::cout << processing_image.info() << std::endl;
-    processing_image.toGrayScale().quantize(std::stoi(std::string(argv[2])));
+    processing_image.toGrayscale();
     cv::imshow("Base Image", base_image);
     cv::imshow("Transformed Image", processing_image.underlyingContainer());
 

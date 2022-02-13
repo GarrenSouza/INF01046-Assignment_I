@@ -57,7 +57,7 @@ Image &Image::mirrorV() {
     return *this;
 }
 
-Image &Image::toGrayScale() {
+Image &Image::toGrayscale() {
     cv::Size size = _matrix.size();
     uchar *row, pixel_size = _matrix.elemSize();
     float L;

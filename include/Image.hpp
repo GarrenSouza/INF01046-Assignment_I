@@ -31,7 +31,7 @@ public:
     Image &mirrorV();
 
     //! Converts the image to grayscale
-    Image &toGrayScale();
+    Image &toGrayscale();
 
     //! Quantizes the grayscale version into the given amount of tones
     Image &quantize(int noTones);
