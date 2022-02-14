@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
     Local::UserInput userInput;
 
     if (argc < 2) {
-        printf("Usage: app.out <Image_Path>\n");
+        printf("Usage: image_app <path_to_image>\n");
         return -1;
     }
 
@@ -27,12 +27,12 @@ int main(int argc, char **argv) {
 
     Local::Image base_image = Image(std::string(argv[1]));
     Local::Image processing_image = Image(base_image);
-    std::cout << processing_image.info() << std::endl;
 
     bool exit = false;
     char option = '0';
     while (!exit) {
         std::cout << "|----[ Garren's Image Manipulation Tool ]----|" << std::endl;
+        std::cout << "| file: " << base_image.getFilePath() << std::endl;
         std::cout << "| Enter the operation:" << std::endl;
         std::cout << "| g. convert to grayscale" << std::endl;
         std::cout << "| v. flip verticaly" << std::endl;
@@ -65,7 +65,8 @@ int main(int argc, char **argv) {
             break;
 
         case 'j': // save to JPEG file
-            processing_image.saveToDisk(userInput.getUserInput("| Enter the file path: ", std::cin));
+            processing_image.saveToDisk(userInput.getUserInput("| Enter the file path: ", std::cin),
+                                        uint(std::stoi(userInput.getUserInput("| Enther the quality (0-100): ", std::cin))));
             break;
 
         case 'r': // resets to base image

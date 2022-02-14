@@ -38,8 +38,10 @@ public:
 
     const cv::Mat &underlyingContainer();
 
-    bool saveToDisk(std::string filePath);
+    bool saveToDisk(std::string filePath, int quality);
 
     std::string info();
+
+    std::string getFilePath();
 };
 } // namespace Local

@@ -77,9 +77,9 @@ Image &Image::toGrayscale() {
     return *this;
 }
 
-bool Image::saveToDisk(std::string filePath) {
+bool Image::saveToDisk(std::string filePath, int quality) {
     // TODO Recap on PNG and JPEG compression techniques in order to answer the first question appropriately
-    // std::vector<int> compression_params = {IMWRITE_JPEG_QUALITY, 20};
+    std::vector<int> compression_params = {cv::IMWRITE_JPEG_QUALITY, quality, cv::IMWRITE_JPEG_OPTIMIZE, 1};
     return cv::imwrite(filePath, _matrix);
 }
 
@@ -142,5 +142,9 @@ std::string Image::info() {
     output << "Channels: " << _matrix.elemSize() / _matrix.elemSize1() << std::endl;
     output << "Channel Size: " << _matrix.elemSize1();
     return output.str();
+}
+
+std::string Image::getFilePath(){
+    return _file_path;
 }
 } // namespace Local
