@@ -37,7 +37,7 @@ int main(int argc, char **argv) {
         std::cout << "| g. convert to grayscale" << std::endl;
         std::cout << "| v. flip verticaly" << std::endl;
         std::cout << "| h. flip horizontally" << std::endl;
-        std::cout << "| q. quantize" << std::endl;
+        std::cout << "| q. quantize from grayscale" << std::endl;
         std::cout << "| r. reset to base image" << std::endl;
         std::cout << "| s. see result" << std::endl;
         std::cout << "| j. save to JPEG" << std::endl;
